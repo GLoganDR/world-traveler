@@ -8,11 +8,19 @@
   $(document).ready(function(){
     initMap(0, 0, 2);
     var positions = getPositions();
-    console.log(positions);
+    //forEach method to loop over an array//
+    positions.forEach(function(pos){
+      addMarker(pos.lat, pos.lng, pos.name);
+    });
   });
 
+  function addMarker(lat, lng, name){
+    var latLng = new google.maps.LatLng(lat, lng);
+    new google.maps.Marker({map: map, position: latLng, title: name, animation: google.maps.Animation.DROP, icon: '/img/toad.png'});
+  }
+
   function getPositions(){
-    var positions = $('table tbody tr').map(function(tr){
+    var positions = $('table tbody tr').toArray().map(function(tr){
       var name = $(tr).attr('data-name'),
           lat  = $(tr).attr('data-lat'),
           lng  = $(tr).attr('data-lng'),
